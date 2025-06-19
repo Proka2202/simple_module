@@ -1,0 +1,11 @@
+<odoo>
+    <record id="access_simple_model_all" model="ir.model.access">
+        <field name="name">simple.model access</field>
+        <field name="model_id" ref="model_simple_model"/>
+        <field name="group_id" eval="False"/>        <!-- visible to everyone -->
+        <field name="perm_read"  eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+</odoo>
