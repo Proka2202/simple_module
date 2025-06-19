@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- ─────────────────────────────────────────────
+       VIEWS for simple.group
+       ───────────────────────────────────────────── -->
+
+  <!-- List (formerly “tree”) view -->
+  <record id="view_simple_group_list" model="ir.ui.view">
+    <field name="name">simple.group.list</field>
+    <field name="model">simple.group</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Form view -->
+  <record id="view_simple_group_form" model="ir.ui.view">
+    <field name="name">simple.group.form</field>
+    <field name="model">simple.group</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name"/>
+          </group>
+
+          <!-- Inline list of related simple.model records -->
+          <field name="model_ids" context="{}">
+            <list>
+              <field name="name"/>
+              <field name="description"/>
+            </list>
+          </field>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- ─────────────────────────────────────────────
+       WINDOW ACTIONS
+       ───────────────────────────────────────────── -->
+
+  <!-- Opens Groups -->
+  <record id="action_simple_group" model="ir.actions.act_window">
+    <field name="name">Simple Groups</field>
+    <field name="res_model">simple.group</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+  <!-- Opens Models (uses Odoo’s auto-generated views) -->
+  <record id="action_simple_model" model="ir.actions.act_window">
+    <field name="name">Simple Models</field>
+    <field name="res_model">simple.model</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <!-- Show all models in the selected group(s) -->
+  <record id="server_action_show_models_of_groups" model="ir.actions.server">
+    <field name="name">Show Models</field>
+
+    <!-- This tells Odoo the action is available on simple.group -->
+    <field name="model_id"        ref="model_simple_group"/>
+    <field name="binding_model_id" ref="model_simple_group"/>
+    <field name="binding_type">action</field>   <!-- “Action” menu, not “Smart-button” -->
+
+    <field name="state">code</field>
+    <field name="code">
+      action = {
+          "type": "ir.actions.act_window",
+          "name": "Simple Models",
+          "res_model": "simple.model",
+          "view_mode": "list,form",
+          # Show any model linked to one of the checked groups
+          "domain": [("group_ids", "in", env.context.get("active_ids", []))],
+      }
+    </field>
+  </record>
+
+  <!-- ─────────────────────────────────────────────
+       MENUS
+       ───────────────────────────────────────────── -->
+
+  <!-- Root -->
+  <menuitem id="menu_simple_data_root"
+            name="Simple Data"
+            sequence="10"/>
+
+  <!-- Groups submenu -->
+  <menuitem id="menu_simple_group"
+            name="Groups"
+            parent="menu_simple_data_root"
+            action="action_simple_group"
+            sequence="10"/>
+
+  <!-- Models submenu -->
+  <menuitem id="menu_simple_model"
+            name="Models"
+            parent="menu_simple_data_root"
+            action="action_simple_model"
+            sequence="20"/>
+
+</odoo>

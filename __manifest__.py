@@ -6,8 +6,9 @@
     'summary': 'A minimal module with one model, list and form views',
     'depends': ['base','project'],
     'data': [
-        'views/simple_model_views.xml',
+        'views/simple_group_views.xml',
         'security/simple_model_access.xml',
+
     ],
     'installable': True,
     'application': True,
