@@ -20,7 +20,34 @@
     <field name="perm_read" eval="1"/>
     <field name="perm_write" eval="1"/>
     <field name="perm_create" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+  </record>
+
+
+  <!-- ACCESS FOR SQL -->
+    <!-- Access for simple.sql.query.wizard -->
+  <record id="access_simple_sql_query_wizard_all" model="ir.model.access">
+    <field name="name">simple.sql.query.wizard – all users</field>
+    <field name="model_id" ref="model_simple_sql_query_wizard"/>
+    <field name="group_id" eval="False"/>   <!-- ← no group restriction -->
+    <field name="perm_read"   eval="1"/>
+    <field name="perm_write"  eval="1"/>
+    <field name="perm_create" eval="1"/>
     <field name="perm_unlink" eval="1"/>
   </record>
+  !-- Grant base users the right to use the wizard -->
+    <record id="access_simple_model_list_wizard_user" model="ir.model.access">
+      <field name="name">access simple.model.list.wizard</field>
+      <!-- reference the wizard’s model -->
+      <field name="model_id" ref="model_simple_model_list_wizard"/>
+      <!-- give it to all internal users -->
+      <field name="group_id" ref="base.group_user"/>
+      <field name="perm_read" eval="1"/>
+      <field name="perm_write" eval="1"/>
+      <field name="perm_create" eval="1"/>
+      <field name="perm_unlink" eval="1"/>
+    </record>
+
+
 
 </odoo>

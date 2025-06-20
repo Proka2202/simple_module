@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- Wizard form view -->
+    <record id="view_simple_model_list_wizard_form" model="ir.ui.view">
+      <field name="name">simple.model.list.wizard.form</field>
+      <field name="model">simple.model.list.wizard</field>
+      <field name="arch" type="xml">
+        <form string="Selected Simple-Model Names">
+          <sheet>
+            <group>
+              <field name="record_names" nolabel="1" widget="text" readonly="1"/>
+            </group>
+          </sheet>
+          <footer>
+            <button string="Close" class="btn-primary" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <!-- Server action: call the method on the *selected* records -->
+    <record id="server_action_show_selected_simple_models" model="ir.actions.server">
+      <field name="name">Show Selected Models</field>
+      <field name="model_id"         ref="model_simple_model"/>
+      <field name="binding_model_id" ref="model_simple_model"/>
+      <field name="binding_type">action</field>
+      <field name="state">code</field>
+      <field name="code"><![CDATA[
+# `records` is the set of rows the user ticked
+action = records.action_show_selected_models()
+      ]]></field>
+    </record>
+
+  </data>
+</odoo>

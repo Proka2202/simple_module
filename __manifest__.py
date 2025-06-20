@@ -7,7 +7,9 @@
     'depends': ['base','project'],
     'data': [
         'views/simple_group_views.xml',
-        'security/ir.model.access.csv',
+        'security/simple_model_access.xml',
+        'views/sql_query_wizard_views.xml',
+        'views/module_wizard_views.xml',
 
     ],
     'installable': True,
